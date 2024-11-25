@@ -43,7 +43,7 @@ export default function Home() {
           Find Nearby NGOs
         </button>
       </div>
-      <div className="flex flex-col items-center px-8 py-12">
+      <div className="bg-gray-100 flex flex-col items-center px-8 py-12">
         <h3 className="text-4xl font-bold">Our Services</h3>
         <div className="w-full grid grid-cols-4 gap-4 mt-8">
           {cardsData.map((card, index) => (
