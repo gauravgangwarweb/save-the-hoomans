@@ -23,6 +23,7 @@ const ReportIncident: React.FC = () => {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           const { latitude, longitude } = position.coords;
+          console.log("Latitude: ", latitude);
           try {
             const response = await fetch(
               `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=2a746a0ddbd94c3a9eef0823539c7c1a`
@@ -39,7 +40,8 @@ const ReportIncident: React.FC = () => {
           }
         },
         (error) => {
-          console.error("Error fetching location: ", error);
+          // console.error("Error fetching location: ", error);
+          alert("Error fetching location: Please enable location services.");
         }
       );
     } else {

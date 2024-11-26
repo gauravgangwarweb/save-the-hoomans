@@ -1,32 +1,59 @@
+'use client';
+import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const NavBar = () => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const router = useRouter();
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
     return (
-        <nav className='flex items-center justify-between px-8 py-4 text-lg'>
+        <nav className='flex items-center md:justify-between px-8 py-4 text-lg'>
             <h3 className='text-xl font-bold'>Save Hoomans</h3>
-            <ul className='flex gap-6'>
-                <li>
-                    <Link href="/">
-                        Home
-                    </Link>
-                </li>
-                <li>
-                    <Link href="/about">
-                        About
-                    </Link>
-                </li>
-                <li>
-                    <Link href="/ngo-list">
-                        NGOs
-                    </Link>
-                </li>
-                <li>
-                    <Link href="/contact">
-                        Contact
-                    </Link>
-                </li>
-            </ul>
-            <button className='bg-green-400 text-white px-4 py-2 rounded-lg hover:bg-green-500 text-lg font-semibold'>Find Nearby NGOs</button>
+            <div className="md:hidden">
+        <button onClick={toggleMenu} className="focus:outline-none">
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
+            ></path>
+          </svg>
+        </button>
+      </div>
+            <ul className={`md:flex gap-6 ${isMenuOpen ? 'block' : 'hidden'} md:block`}>
+        <li>
+          <Link href="/">
+            Home
+          </Link>
+        </li>
+        <li>
+          <Link href="/about">
+            About
+          </Link>
+        </li>
+        <li>
+          <Link href="/ngo-list">
+            NGOs
+          </Link>
+        </li>
+        <li className='md:hidden'>
+          <Link href="/find-nearby-ngos">
+            Find Nearby NGOs
+          </Link>
+        </li>
+      </ul>
+            <button onClick={() => router.push('/search')} className='hidden md:block bg-green-400 text-white px-4 py-2 rounded-lg hover:bg-green-500 text-lg font-semibold'>Find Nearby NGOs</button>
         </nav>
     );
 };
