@@ -32,10 +32,10 @@ export default function Home() {
   return (
     <div>
       <div
-        className="flex flex-col justify-center items-center bg-green-900 bg-center bg-cover bg-no-repeat w-full h-96"
+        className="flex flex-col justify-center items-center bg-green-900 bg-center bg-contain w-full h-96 pb-12"
         style={{ backgroundImage: `url('/home-hero.png')` }}
       >
-        <h3 className="text-6xl text-center text-white font-bold pt-14">
+        <h3 className="md:text-6xl text-5xl text-center text-white font-bold pt-14">
           Help Animals In Need
         </h3>
         <p className="text-white text-lg text-center mt-8">
