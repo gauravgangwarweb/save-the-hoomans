@@ -10,6 +10,8 @@ const NavBar = () => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  const isActive = (pathname) => router.pathname === pathname;
     return (
         <nav className='flex items-center md:justify-between px-8 py-4 text-lg'>
             <h3 className='text-xl font-bold'>Save Hoomans</h3>
@@ -31,9 +33,9 @@ const NavBar = () => {
           </svg>
         </button>
       </div>
-            <ul className={`md:flex gap-6 ${isMenuOpen ? 'block' : 'hidden'} md:block`}>
+            {/* <ul className={`md:flex gap-6 ${isMenuOpen ? 'block' : 'hidden'} md:block`}>
         <li>
-          <Link href="/">
+          <Link className={isActive('/') ? 'text-green-500' : ''} href="/">
             Home
           </Link>
         </li>
@@ -47,12 +49,17 @@ const NavBar = () => {
             NGOs
           </Link>
         </li>
+        <li>
+          <Link href="/join-us-as-ngo">
+           Join Us
+          </Link>
+        </li>
         <li className='md:hidden'>
           <Link href="/find-nearby-ngos">
             Find Nearby NGOs
           </Link>
         </li>
-      </ul>
+      </ul> */}
             <button onClick={() => router.push('/search')} className='hidden md:block bg-green-400 text-white px-4 py-2 rounded-lg hover:bg-green-500 text-lg font-semibold'>Find Nearby NGOs</button>
         </nav>
     );

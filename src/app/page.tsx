@@ -1,5 +1,6 @@
 import Image from "next/image";
 import FindNearbyButton from "./ui/FindNearbyButton";
+import Link from "next/link";
 const cardsData = [
   {
     title: "On Spot Care",
@@ -41,12 +42,16 @@ export default function Home() {
           Be the helping hand for needy animals.
         </p>
         <FindNearbyButton />
+        <Link className="bg-blue-400 text-white px-4 py-2 rounded-lg hover:bg-blue-500 text-lg font-semibold mt-4" href="/ngo-list">List of NGOs</Link>
       </div>
       <div className="bg-gray-100 flex flex-col items-center px-2 md:px-8 py-12">
         <h3 className="text-4xl font-bold">Our Services</h3>
         <div className="w-full grid grid-cols-1 md:grid-cols-4 gap-4 mt-8">
           {cardsData.map((card, index) => (
-            <div key={index} className="w-full flex flex-col items-center justify-center border-2 rounded-lg px-4 py-8">
+            <div
+              key={index}
+              className="w-full flex flex-col items-center justify-center border-2 rounded-lg px-4 py-8"
+            >
               <h2 className="text-gray-700 text-2xl font-bold">{card.title}</h2>
               <Image
                 className="mt-4 object-cover"
