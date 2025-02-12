@@ -28,7 +28,7 @@ const ReportIncident: React.FC = () => {
         async (position) => {
           const { latitude, longitude } = position.coords;
           setLocationCords([latitude, longitude]);
-          console.log("Latitude: ", latitude);
+          // console.log("Latitude: ", latitude);
           try {
             const response = await fetch(
               `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=2a746a0ddbd94c3a9eef0823539c7c1a`
@@ -79,7 +79,7 @@ const ReportIncident: React.FC = () => {
         setSubmissionStatus("Failed to submit report. Please try again later.");
       }
     } catch(error){
-      console.error("Error submitting report: ", error);
+      // console.error("Error submitting report: ", error);
       setSubmissionStatus("Failed to submit report. Please try again later.");
     }
   };
