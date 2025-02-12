@@ -136,7 +136,7 @@ const ReportIncident: React.FC = () => {
           />
         </div>
 
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <label className="block mb-1">Upload Photos</label>
           <input
             type="file"
@@ -144,7 +144,7 @@ const ReportIncident: React.FC = () => {
             onChange={handlePhotoUpload}
             className="p-2 border rounded w-full"
           />
-        </div>
+        </div> */}
 
         <div className="mb-4">
           <label className="block mb-1">Reporter's Conatact No.</label>
