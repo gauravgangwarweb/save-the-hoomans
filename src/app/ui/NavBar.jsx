@@ -14,7 +14,7 @@ const NavBar = () => {
   const isActive = (pathname) => router.pathname === pathname;
   return (
     <nav className="flex items-center justify-between px-8 py-4 text-lg">
-      <h3 className="text-xl font-bold">Save Hoomans</h3>
+      <Link href="/" className="text-xl font-bold">Save Hoomans</Link>
       <div className="md:hidden">
         <button onClick={toggleMenu} className="focus:outline-none">
           <svg

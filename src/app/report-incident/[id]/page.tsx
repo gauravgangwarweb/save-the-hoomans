@@ -1,14 +1,18 @@
 "use client";
 import React, { useState } from "react";
+import { useRouter, useParams } from "next/navigation";
+import api from "@/app/utills/api";
 
 const ReportIncident: React.FC = () => {
+  const { id } = useParams();
   const [location, setLocation] = useState("");
+  const [locationCords, setLocationCords] = useState<[number, number] | null>(null);
   const [problemType, setProblemType] = useState("");
   const [description, setDescription] = useState("");
   const [photos, setPhotos] = useState<File[]>([]);
   const [contactInfo, setContactInfo] = useState("");
   const [submissionStatus, setSubmissionStatus] = useState("");
-
+  
   interface PhotoUploadEvent extends React.ChangeEvent<HTMLInputElement> {
     target: HTMLInputElement & EventTarget;
   }
@@ -23,6 +27,7 @@ const ReportIncident: React.FC = () => {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           const { latitude, longitude } = position.coords;
+          setLocationCords([latitude, longitude]);
           console.log("Latitude: ", latitude);
           try {
             const response = await fetch(
@@ -49,21 +54,34 @@ const ReportIncident: React.FC = () => {
     }
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // Simulate a submission process
     setSubmissionStatus("Submitting your report...");
-
-    // Simulate a delay for submission
-    setTimeout(() => {
-      setSubmissionStatus("Your report has been submitted successfully!");
-      // Reset form fields
-      setLocation("");
-      setProblemType("");
-      setDescription("");
-      setPhotos([]);
-      setContactInfo("");
-    }, 2000);
+    const formData = {
+      ngoId: id,
+      location: locationCords,
+      problemType,
+      description,
+      contactNumber: contactInfo, 
+    }
+    try{
+      const response = await fetch(`${api}/report-incident`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      if(response.ok){
+        setSubmissionStatus("Report submitted successfully");
+      } else {
+        setSubmissionStatus("Failed to submit report. Please try again later.");
+      }
+    } catch(error){
+      console.error("Error submitting report: ", error);
+      setSubmissionStatus("Failed to submit report. Please try again later.");
+    }
   };
 
   return (
@@ -113,13 +131,13 @@ const ReportIncident: React.FC = () => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             className="p-2 border rounded w-full"
-            rows="4"
+            rows={4}
             required
           />
         </div>
 
         <div className="mb-4">
-          <label className="block mb-1">Upload Photos*</label>
+          <label className="block mb-1">Upload Photos</label>
           <input
             type="file"
             multiple
@@ -147,9 +165,7 @@ const ReportIncident: React.FC = () => {
         </button>
       </form>
 
-      {submissionStatus && (
-        <div className="mt-4 text-green-600">{submissionStatus}</div>
-      )}
+      {submissionStatus && <p className="mt-4">{submissionStatus}</p>}
     </div>
   );
 };
