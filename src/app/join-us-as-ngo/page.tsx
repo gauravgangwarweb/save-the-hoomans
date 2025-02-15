@@ -67,7 +67,7 @@ const ForNgosPage: React.FC = () => {
       setOperatingHours("");
       setLocation("");
       setMission("");
-      setDocuments([]);
+      // setDocuments([]);
       setConsent(false);
     }, 2000);
   };
