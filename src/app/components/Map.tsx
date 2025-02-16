@@ -1,15 +1,6 @@
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-import L from "leaflet";
-import {
-  DEFAULT_ZOOM,
-  DefaultIcon,
-  INDIA_BOUNDS,
-  INDIA_CENTER,
-  MapUpdater,
-} from "../utills/map";
-
-L.Marker.prototype.options.icon = DefaultIcon;
+import { useEffect, useRef } from 'react';
+import maplibregl from 'maplibre-gl';
+import 'maplibre-gl/dist/maplibre-gl.css';
 
 interface NGO {
   name: string;
@@ -19,44 +10,106 @@ interface NGO {
   location: [number, number];
 }
 
-interface MapContainerDivProps {
+interface MapContainerProps {
   data: NGO[] | string;
 }
 
-const MapContainerDiv: React.FC<MapContainerDivProps> = ({ data }) => {
+const MapContainer: React.FC<MapContainerProps> = ({ data }) => {
+  const mapContainer = useRef<HTMLDivElement>(null);
+  const map = useRef<maplibregl.Map | null>(null);
+
+  useEffect(() => {
+    if (!map.current && mapContainer.current) {
+      map.current = new maplibregl.Map({
+        container: mapContainer.current,
+        style: {
+          version: 8,
+          sources: {
+            'osm': {
+              type: 'raster',
+              tiles: [
+                'https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
+                'https://mt2.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
+                'https://mt3.google.com/vt/lyrs=m&x={x}&y={y}&z={z}'
+              ],
+              tileSize: 256,
+              attribution: '© Google Maps'
+            }
+          },
+          layers: [{
+            id: 'osm',
+            type: 'raster',
+            source: 'osm',
+            minzoom: 0,
+            maxzoom: 20
+          }]
+        },
+        center: [78.9629, 20.5937], // India center
+        zoom: 4
+      });
+
+      // Add zoom and rotation controls
+      map.current.addControl(new maplibregl.NavigationControl());
+
+      map.current.on('load', () => {
+        if (Array.isArray(data) && data.length > 0) {
+          const bounds = new maplibregl.LngLatBounds();
+
+          data.forEach(ngo => {
+            // Create custom popup
+            const popup = new maplibregl.Popup({ 
+              offset: 25,
+              closeButton: false,
+              maxWidth: '300px'
+            })
+            .setHTML(`
+              <div class="p-4 rounded-lg shadow-sm">
+                <h3 class="font-bold text-lg mb-2">${ngo.name}</h3>
+                <p class="text-gray-600 mb-1">${ngo.services}</p>
+                <p class="text-gray-600 mb-1">Contact: ${ngo.contact}</p>
+                <p class="text-amber-500">${'⭐'.repeat(Math.round(ngo.rating))}</p>
+              </div>
+            `);
+
+            // Create marker
+            new maplibregl.Marker({
+              color: '#dc2626', // red-600
+              scale: 1.2
+            })
+            .setLngLat([ngo.location[1], ngo.location[0]])
+            .setPopup(popup)
+            .addTo(map.current!);
+
+            // Extend bounds to include this location
+            bounds.extend([ngo.location[1], ngo.location[0]]);
+          });
+
+          // Fit map to show all markers with padding
+          if (map.current) {
+            map.current.fitBounds(bounds, {
+              padding: { top: 50, bottom: 50, left: 50, right: 50 },
+              maxZoom: 15,
+              duration: 1000
+            });
+          }
+        }
+      });
+    }
+
+    return () => {
+      if (map.current) {
+        map.current.remove();
+        map.current = null;
+      }
+    };
+  }, [data]);
+
   return (
-    <div className="w-full">
-      <MapContainer
-        id="map"
-        center={INDIA_CENTER}
-        zoom={DEFAULT_ZOOM}
-        bounds={INDIA_BOUNDS}
-        className="h-64 w-full mt-4"
-        style={{ height: "500px", width: "100%" }}
-      >
-        {Array.isArray(data) && <MapUpdater data={data} />}
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        />
-        {
-          (data as NGO[]).map((ngo: NGO, index: number) => (
-          <Marker key={index} position={ngo.location}>
-            <Popup>
-              <strong>{ngo.name}</strong>
-              <br />
-              {ngo.services}
-              <br />
-              Contact: {ngo.contact}
-              <br />
-              Rating: {ngo.rating} ⭐
-            </Popup>
-          </Marker>
-        ))}
-      </MapContainer>
-      ;
-    </div>
+    <div 
+      ref={mapContainer} 
+      className="w-full h-[600px] mt-4 rounded-lg shadow-lg"
+    />
   );
 };
 
-export default MapContainerDiv;
+export default MapContainer;

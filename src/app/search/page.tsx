@@ -4,8 +4,20 @@ import React, { useEffect, useState } from "react";
 import { cities, states } from "../lib/cities";
 import NgoCard from "../ui/NgoCard";
 import api from "../utills/api";
-import MapContainerDiv from "../components/Map";
 import Loader from "../components/Loader";
+import dynamic from 'next/dynamic';
+
+const MapWithNoSSR = dynamic(
+  () => import('../components/Map'),
+  { 
+    ssr: false,
+    loading: () => (
+      <div className="w-full h-[500px] bg-gray-100 flex items-center justify-center">
+        <Loader />
+      </div>
+    )
+  }
+);
 
 // First, add types for better type safety
 type NGO = {
@@ -172,7 +184,7 @@ const SearchPage: React.FC = () => {
       </div>
       {/*  Map */}
       <h2 className="self-start text-2xl font-bold mt-4">Nearby NGOs</h2>
-      <MapContainerDiv data={Array.isArray(data) ? data : []} />
+      <MapWithNoSSR data={Array.isArray(data) ? data : []} />
     </div>
   );
 };
