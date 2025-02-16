@@ -44,11 +44,10 @@ const MapContainer: React.FC<MapContainerProps> = ({ data }) => {
             maxzoom: 20
           }]
         },
-        center: [78.9629, 20.5937], // India center
+        center: [78.9629, 20.5937],
         zoom: 4
       });
 
-      // Add zoom and rotation controls
       map.current.addControl(new maplibregl.NavigationControl());
 
       map.current.on('load', () => {
@@ -56,7 +55,6 @@ const MapContainer: React.FC<MapContainerProps> = ({ data }) => {
           const bounds = new maplibregl.LngLatBounds();
 
           data.forEach(ngo => {
-            // Create custom popup
             const popup = new maplibregl.Popup({ 
               offset: 25,
               closeButton: false,
@@ -71,20 +69,17 @@ const MapContainer: React.FC<MapContainerProps> = ({ data }) => {
               </div>
             `);
 
-            // Create marker
             new maplibregl.Marker({
-              color: '#dc2626', // red-600
+              color: '#dc2626', 
               scale: 1.2
             })
             .setLngLat([ngo.location[1], ngo.location[0]])
             .setPopup(popup)
             .addTo(map.current!);
 
-            // Extend bounds to include this location
             bounds.extend([ngo.location[1], ngo.location[0]]);
           });
-
-          // Fit map to show all markers with padding
+          
           if (map.current) {
             map.current.fitBounds(bounds, {
               padding: { top: 50, bottom: 50, left: 50, right: 50 },
