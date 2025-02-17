@@ -1,101 +1,75 @@
 import Image from "next/image";
+import FindNearbyButton from "./ui/FindNearbyButton";
+import Link from "next/link";
+const cardsData = [
+  {
+    title: "On Spot Care",
+    src: "/spot-care.jpg",
+    description:
+      "Providing immediate assistance to animals in distress, Connecting you to nearby NGOs and care providers. Dedicated to ensuring timely support and rescue, Because every life deserves compassion and care",
+  },
+  {
+    title: "NGOs Directory",
+    src: "/ngo-directory.jpg",
+    description:
+      "Explore our extensive directory of NGOs committed to animal welfare and rescue. Find the right support near you, because every animal deserves care.",
+  },
+  {
+    title: "Volunteer Opportunities",
+    src: "/volunteer.jpg",
+    description:
+      "Join hands with nearby NGOs to create meaningful change. Volunteer your time to support animals in need. Be a part of a compassionate community, Making a difference, one act of kindness at a time.",
+  },
+  {
+    title: "Donation",
+    src: "/donation.png",
+    description:
+      "Explore our extensive directory of NGOs committed to animal welfare and rescue. Find the right support near you, because every animal deserves care.",
+  },
+];
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div>
+      <div
+        className="flex flex-col justify-center items-center bg-green-900 bg-center bg-contain w-full h-96 pb-12"
+        style={{ backgroundImage: `url('/home-hero.png')` }}
+      >
+        <h3 className="md:text-6xl text-5xl text-center text-white font-bold pt-14">
+          Help Animals In Need
+        </h3>
+        <p className="text-white text-lg text-center mt-8">
+          Be the helping hand for needy animals.
+        </p>
+        <FindNearbyButton />
+        <Link
+          className="bg-blue-400 text-white px-4 py-2 rounded-lg hover:bg-blue-500 text-lg font-semibold mt-4"
+          href="/ngo-list"
+        >
+          List of NGOs
+        </Link>
+      </div>
+      <div className="bg-gray-100 flex flex-col items-center px-2 md:px-8 py-12">
+        <h3 className="text-4xl font-bold">Our Services</h3>
+        <div className="w-full grid grid-cols-1 md:grid-cols-4 gap-4 mt-8">
+          {cardsData.map((card, index) => (
+            <div
+              key={index}
+              className="w-full flex flex-col items-center justify-center border-2 rounded-lg px-4 py-8"
+            >
+              <h2 className="text-gray-700 text-2xl font-bold">{card.title}</h2>
+              <Image
+                className="mt-4 object-cover"
+                width={300}
+                height={300}
+                src={card.src}
+                alt="hero"
+              />
+              <p className="mt-4 text-lg text-center">{card.description}</p>
+            </div>
+          ))}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
     </div>
   );
 }
