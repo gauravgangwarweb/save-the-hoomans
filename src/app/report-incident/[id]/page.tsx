@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import api from "@/app/utills/api";
+import ImageUploader from "@/app/components/ImageUploader";
 
 const ReportIncident: React.FC = () => {
   const { id } = useParams();
@@ -9,18 +10,9 @@ const ReportIncident: React.FC = () => {
   const [locationCords, setLocationCords] = useState<[number, number] | null>(null);
   const [problemType, setProblemType] = useState("");
   const [description, setDescription] = useState("");
-  const [photos, setPhotos] = useState<File[]>([]);
+  const [photoUrl, setPhotoUrl] = useState<string>("");
   const [contactInfo, setContactInfo] = useState("");
   const [submissionStatus, setSubmissionStatus] = useState("");
-  
-  interface PhotoUploadEvent extends React.ChangeEvent<HTMLInputElement> {
-    target: HTMLInputElement & EventTarget;
-  }
-
-  const handlePhotoUpload = (event: PhotoUploadEvent) => {
-    const files: File[] = Array.from(event.target.files || []);
-    setPhotos(files);
-  };
 
   const handleAutoDetectLocation = () => {
     if (navigator.geolocation) {
@@ -53,7 +45,7 @@ const ReportIncident: React.FC = () => {
       alert("Geolocation is not supported by this browser.");
     }
   };
-
+console.log(photoUrl)
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // Simulate a submission process
@@ -63,6 +55,7 @@ const ReportIncident: React.FC = () => {
       location: locationCords,
       problemType,
       description,
+      photoUrl,
       contactNumber: contactInfo, 
     }
     try{
@@ -136,15 +129,10 @@ const ReportIncident: React.FC = () => {
           />
         </div>
 
-        {/* <div className="mb-4">
+         <div className="mb-4">
           <label className="block mb-1">Upload Photos</label>
-          <input
-            type="file"
-            multiple
-            onChange={handlePhotoUpload}
-            className="p-2 border rounded w-full"
-          />
-        </div> */}
+          <ImageUploader onUploadComplete={(url) => setPhotoUrl(url)} />
+        </div> 
 
         <div className="mb-4">
           <label className="block mb-1">Reporter's Conatact No.</label>
