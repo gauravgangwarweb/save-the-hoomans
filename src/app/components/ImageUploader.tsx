@@ -1,13 +1,14 @@
 "use client";
 import React, { useState } from "react";
 import { ImageKitProvider, IKUpload } from "imagekitio-next";
+import api from "../utills/api";
 
 const urlEndpoint = process.env.NEXT_PUBLIC_URL_ENDPOINT;
 const publicKey = process.env.NEXT_PUBLIC_PUBLIC_KEY;
 
 const authenticator = async () => {
   try {
-    const response = await fetch("http://localhost:4000/api/image-auth");
+    const response = await fetch(`${api}/image-auth`);
 
     if (!response.ok) {
       const errorText = await response.text();
