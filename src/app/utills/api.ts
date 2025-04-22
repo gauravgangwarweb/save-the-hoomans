@@ -1,3 +1,3 @@
-const api = "https://save-the-hoomans-backend-production.up.railway.app/api"
+const api = "https://save-the-hoomans-backend.vercel.app/api"
 
 export default api
