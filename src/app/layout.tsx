@@ -20,7 +20,13 @@ export const metadata: Metadata = {
   description: "Safe guarding the lives of animals in need",
   viewport: {
     width: 'device-width',
-    initialScale: 1
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false
+  },
+  other: {
+    'viewport-fit': 'cover',
+    'content-scale': 'device-width'
   }
 };
 
@@ -30,10 +36,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+    <html lang="en" className="overflow-x-hidden">
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased w-full overflow-x-hidden`}>
         <NavBar />
         {children}
         <Footer />
