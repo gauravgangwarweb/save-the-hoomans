@@ -11,7 +11,11 @@ const NavBar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const isActive = (pathname) => router.pathname === pathname;
+  interface IsActiveFn {
+    (pathname: string): boolean;
+  }
+
+  const isActive: IsActiveFn = (pathname) => (router as { pathname?: string }).pathname === pathname;
   return (
     <nav className="w-full px-4 fixed top-4 z-50 ">
       <div className="w-full bg-[#E0FFE0] flex items-center justify-between text-lg px-5 py-4 rounded-md shadow-md">
