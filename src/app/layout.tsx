@@ -4,6 +4,7 @@ import "./globals.css";
 import Footer from "./ui/Footer";
 import NavBar from "./ui/NavBar";
 import ViewportControl from "./components/ViewportControl";
+import { ViewportFix } from "./components/ViewportFix";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -37,18 +38,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="overflow-x-hidden">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <meta content="true" name="HandheldFriendly" />
-        <meta name="MobileOptimized" content="width" />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased max-w-[100vw] overflow-x-hidden`}>
-        <ViewportControl />
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden`}>
+        <ViewportFix />
         <NavBar />
-        <div className="w-full overflow-x-hidden">
-          {children}
-        </div>
+        <main className="w-full">{children}</main>
         <Footer />
       </body>
     </html>
