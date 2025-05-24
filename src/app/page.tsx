@@ -2,6 +2,8 @@ import Image from "next/image";
 import FindNearbyButton from "./ui/FindNearbyButton";
 import Link from "next/link";
 import { TextAnimate } from "../components/magicui/text-animate";
+import { Cover } from "../components/ui/cover";
+
 const cardsData = [
 	{
 		title: "On Spot Care",
@@ -11,13 +13,13 @@ const cardsData = [
 	},
 	{
 		title: "NGOs Directory",
-		src: "/ngo-directory.jpg",
+		src: "ngo-directory.jpg",
 		description:
 			"Explore our extensive directory of NGOs committed to animal welfare and rescue. Find the right support near you, because every animal deserves care.",
 	},
 	{
 		title: "Volunteer Opportunities",
-		src: "/volunteer.jpg",
+		src: "https://static.jobscan.co/blog/uploads/Volunteers-working-together-1.jpg",
 		description:
 			"Join hands with nearby NGOs to create meaningful change. Volunteer your time to support animals in need. Be a part of a compassionate community, Making a difference, one act of kindness at a time.",
 	},
@@ -55,30 +57,38 @@ export default function Home() {
 					>
 						List of NGOs
 					</Link>
-					<img className="absolute -bottom-10" src="/hero/dog.gif" alt="dog" />
+					<img
+						className="absolute -bottom-10"
+						src="/hero/dog.gif"
+						alt="dog"
+					/>
 				</div>
 			</div>
-			<div className="bg-gray-100 flex flex-col items-center px-2 md:px-8 py-12">
-				<h3 className="text-4xl font-bold">Our Services</h3>
+			{/* services cards */}
+			<div className="bg-gray-100 flex flex-col items-center px-2 md:px-8 py-16">
+				<h3 className="text-5xl font-bold">Our <Cover>Services</Cover></h3>
 				<div className="w-full grid grid-cols-1 md:grid-cols-4 gap-4 mt-8">
 					{cardsData.map((card, index) => (
 						<div
 							key={index}
-							className="w-full flex flex-col items-center justify-center border-2 rounded-lg px-4 py-8"
+							className="group relative h-[360px] max-w-sm overflow-hidden rounded-xl bg-white shadow-lg transition-all duration-300 hover:shadow-2xl hover:-translate-y-2"
 						>
-							<h2 className="text-gray-700 text-2xl font-bold">
-								{card.title}
-							</h2>
-							<Image
-								className="mt-4 object-cover"
-								width={300}
-								height={300}
-								src={card.src}
-								alt="hero"
-							/>
-							<p className="mt-4 text-lg text-center">
-								{card.description}
-							</p>
+							<div className="relative h-48 overflow-hidden">
+								<div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"></div>
+								<img
+									className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+									src={card.src}
+									alt={card.title}
+								/>
+							</div>
+							<div className="p-4">
+								<h5 className="mb-2 text-xl font-bold text-gray-900 transition-colors duration-300 group-hover:text-teal-600">
+									{card.title}
+								</h5>
+								<p className="text-sm text-gray-600 line-clamp-4">
+									{card.description}
+								</p>
+							</div>
 						</div>
 					))}
 				</div>
