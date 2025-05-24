@@ -36,10 +36,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="overflow-x-hidden">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased w-full overflow-x-hidden`}>
+    <html lang="en">
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+        <meta name="HandheldFriendly" content="true" />
+      </head>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased max-w-[100vw] overflow-x-hidden`}>
         <NavBar />
-        {children}
+        <main className="w-full overflow-x-hidden">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>
