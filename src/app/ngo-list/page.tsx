@@ -6,7 +6,7 @@ import api from "../utills/api";
 const getData = async () => {
   const res = await fetch(`${api}/all`)
   if(!res.ok) {
-    throw new Error('Failed to fetch data')
+   return <p>Ooops There was some error at out side</p>
   }
 
   return res.json()
