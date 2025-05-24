@@ -1,5 +1,6 @@
 "use client";
 
+import React, { JSX } from "react";
 import { cn } from "@/lib/utils";
 import {
   AnimatePresence,
