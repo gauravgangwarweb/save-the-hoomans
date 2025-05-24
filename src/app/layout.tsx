@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Footer from "./ui/Footer";
 import NavBar from "./ui/NavBar";
+import ViewportControl from "./components/ViewportControl";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -38,14 +39,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-        <meta name="HandheldFriendly" content="true" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta content="true" name="HandheldFriendly" />
+        <meta name="MobileOptimized" content="width" />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased max-w-[100vw] overflow-x-hidden`}>
+        <ViewportControl />
         <NavBar />
-        <main className="w-full overflow-x-hidden">
+        <div className="w-full overflow-x-hidden">
           {children}
-        </main>
+        </div>
         <Footer />
       </body>
     </html>
