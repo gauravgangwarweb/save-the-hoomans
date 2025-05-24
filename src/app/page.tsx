@@ -35,7 +35,7 @@ export default function Home() {
 	return (
 		<div>
 			<div
-				className="bg-green-900 bg-center bg-contain w-full h-screen pb-12 px-4"
+				className="bg-green-900 bg-center bg-contain w-full pb-12 px-4"
 				style={{ backgroundImage: `url('/home-hero.png')` }}
 			>
 				<div className="relative flex flex-col items-center justify-center h-full">
