@@ -1,4 +1,3 @@
-import Image from "next/image";
 import FindNearbyButton from "./ui/FindNearbyButton";
 import Link from "next/link";
 import { TextAnimate } from "../components/magicui/text-animate";
@@ -47,9 +46,9 @@ export default function Home() {
 					>
 						Help Animals in Need
 					</TextAnimate>
-					<p className="text-white text-lg text-center mt-8">
+					<TextAnimate className="text-white text-lg text-center mt-8">
 						Be the helping hand for needy animals.
-					</p>
+					</TextAnimate>
 					<FindNearbyButton />
 					<Link
 						className="bg-blue-400 text-white px-4 py-2 rounded-lg hover:bg-blue-500 text-lg font-semibold mt-4"
