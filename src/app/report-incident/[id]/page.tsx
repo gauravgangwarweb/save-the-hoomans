@@ -78,7 +78,7 @@ console.log(photoUrl)
   };
 
   return (
-    <div className="bg-gray-100 p-5">
+    <div className="bg-gray-100 px-5 pt-28 pb-5">
       <h2 className="text-2xl font-bold mb-3">Incident Report</h2>
       <form onSubmit={handleSubmit} className="bg-white p-5 rounded shadow">
         <div className="mb-4">

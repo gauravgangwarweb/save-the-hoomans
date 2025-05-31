@@ -14,6 +14,19 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      {
+        source: '/__nextjs_original-stack-frames',
+        destination: '/api/stack-trace',
+        permanent: true,
+      },
+    ]
+  },
+  onDemandEntries: {
+    maxInactiveAge: 25 * 1000,
+    pagesBufferLength: 2,
+  },
 };
 
 export default nextConfig;

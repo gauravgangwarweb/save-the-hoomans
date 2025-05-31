@@ -132,7 +132,7 @@ const SearchPage: React.FC = () => {
   };
 
   return (
-    <div className="bg-gray-100 flex flex-col items-center p-8">
+    <div className="bg-gray-100 flex flex-col items-center px-8 pt-28 pb-8">
       <h2 className="text-2xl font-bold self-start">Search for NGOs</h2>
       <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
         <select
